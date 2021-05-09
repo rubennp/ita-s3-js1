@@ -40,7 +40,20 @@
         let objectes = ["taula", "cadira", "ordinador", "llibreta"];
         for (o in objectes) console.log("L'objecte " + objectes[o] + " està a la posició " + o);
 
-        
+        // exercici 8:
+        function calculadora(op, v1, v2) {
+            switch(op) {
+                case 'suma':
+                    return v1+v2;
+                case 'resta':
+                    return v1-v2;
+                case 'multiplica':
+                    return v1*v2;
+            }
+        }
+        console.log(calculadora("suma", 2, 3));
+        console.log(calculadora("resta", 2, 3));
+        console.log(calculadora("multiplica", 2, 3));
     </script>
 </head>
 
