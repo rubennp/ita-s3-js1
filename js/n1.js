@@ -27,7 +27,7 @@ console.log(fraseColor.replaceAll("o", "u"));
 
 // exercici 7:
 let objectes = ["taula", "cadira", "ordinador", "llibreta"];
-for (o in objectes) console.log("L'objecte " + objectes[o] + " està a la posició " + o);
+for (let o in objectes) console.log("L'objecte " + objectes[o] + " està a la posició " + o);
 
 // exercici 8:
 function calculadora(op, v1, v2) {

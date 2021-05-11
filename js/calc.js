@@ -8,7 +8,7 @@ function calc(oper) {
     let op = '';
 
     // troba el tipus d'operació
-    for (d in oper) {
+    for (let d in oper) {
         if (oper[d] === '+' || oper[d] === '-' || oper[d] === '/' || oper[d] === '*') {
             op = oper[d];
             break;
@@ -58,7 +58,7 @@ function calc(oper) {
 function decimals(arr) {
     let maxDec = 0;
 
-    for (n in arr) {
+    for (let n in arr) {
         // divideix "número" per '.'
         let nd = arr[n].split('.');
         if (nd[1] !== undefined) {
