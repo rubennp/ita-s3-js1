@@ -1,0 +1,85 @@
+$fons-clar: #eaeaea;
+$fons-fosc: #aeaeae;
+
+@font-face {
+    font-family: sevenSegment;
+    src: url("../fonts/Seven\ Segment.ttf");
+}
+
+main {
+    width: auto;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $fons-fosc;
+
+    .calc-container { 
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 5px 5px;
+        grid-template-areas:
+          "pantalla pantalla pantalla pantalla pantalla"
+          ". . . . ."
+          ". . . . ."
+          ". . . . .";
+
+        color: #424242;
+
+        #pantalla {
+            grid-area: pantalla;
+            background-color: $fons-clar;
+            width: 270px;
+            text-align: right;
+            white-space: nowrap;
+            font-family: sevenSegment, monospace;
+            font-size: 3em;
+            font-weight: bold;
+            overflow-y: hidden;
+            overflow-x: scroll;
+        }
+
+        button {
+            width: 50px;
+            height: 50px;
+            border: none;
+
+            font-family: 'Fira Sans', sans-serif;
+
+            &.nums { background-color: white; }
+
+            &.operador { background-color: moccasin; }
+
+            &.memoria { background-color: salmon; }
+
+            &.neteja { background-color: orangered; }
+
+            &:hover:not([disabled]) { cursor: pointer; }
+
+            &:active { 
+                background-color: $fons-fosc;
+                color: $fons-clar;
+            }
+
+            &[disabled] {
+                color: rgba(0,0,0,0.2)
+            }
+        }
+
+        .punt {
+            width: auto;
+            grid-column-start: 2;
+            grid-column-end: span 2;
+        }
+
+        .igual {
+            width: auto;
+            background-color: dodgerblue;
+            color: white;
+            grid-column-start: 1;
+            grid-column-end: span 5;
+            font-size: 2em;
+        }
+    }
+}

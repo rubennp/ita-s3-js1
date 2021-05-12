@@ -61,8 +61,8 @@ function decimals(arr) {
     for (let n in arr) {
         // divideix "número" per '.'
         let nd = arr[n].split('.');
+         // si existeix una part decimal, calcula la seva llargada
         if (nd[1] !== undefined) {
-            // si existeix una part decimal, calcula la seva llargada
             let dec = nd[1].length;
             // si és major que la que ja està guardada, actualitza
             if (dec > maxDec) maxDec = dec;
@@ -72,7 +72,98 @@ function decimals(arr) {
     return maxDec;
 }
 
-// proves
+/*
+ * Nivell 3
+ */
+const SI = true, NO = false;
+const ON = false, OFF = true;   // butons activats o no
+
+let pantalla = "0";             // sortida per pantalla
+let memoria = 0;
+
+// let manual = NO;             // entrada manual de dades -> TODO <-
+let punt = NO;                  // controla si s'ha activat el .
+let num1 = SI;                  // si estem al 1r número o al segon
+let novaOp = SI;
+
+window.onload = function() {
+    document.getElementById("pantalla").value = "0";
+}; 
+
+function add(toPantalla) {
+
+    // si entrada és un punt o una operació
+    if (toPantalla.esPunt() || toPantalla.esOp()) {
+        // desactiva punt i funcions
+        btnsOnOff("punt", OFF);         
+        btnsOnOff("func", OFF);
+        btnsOnOff("igual", OFF);
+    }
+
+    // si entrada és un punt
+    if (toPantalla.esPunt()) punt = SI;
+
+    // si entrada és una operació
+    else if (toPantalla.esOp()) {         
+        num1 = NO;
+        punt = NO;
+    } 
+    // si entrada és un dígit
+    else {                                
+        if (num1) btnsOnOff("func", ON);
+        else {
+            btnsOnOff("igual", ON);
+            if (!punt) btnsOnOff("punt", ON);
+        }
+    }
+
+    // si estem al principi i l'entrada no és un punt esborra pantalla
+    if (pantalla === "0" && !toPantalla.esPunt() || novaOp) {
+        pantalla = "";
+    }
+
+    // si és nova operació
+    if (novaOp) {
+        novaOp = NO;
+        btnsOnOff("punt", ON);
+    }
+
+    pantalla += toPantalla;
+
+    document.getElementById("pantalla").value = pantalla;
+}
+
+function resultat() {
+    let resultat = calc(pantalla);
+
+    novaOp = SI;
+    punt = NO;
+    num1 = SI;
+
+    btnsOnOff("igual", OFF);
+    btnsOnOff("punt", OFF);
+
+    document.getElementById("pantalla").value = resultat;
+}
+
+function btnsOnOff(el, val) {
+    let btnsOp = document.getElementsByClassName(el);
+    for (let o in btnsOp) btnsOp[o].disabled = val;
+}
+
+String.prototype.esDigit = function() {
+    return (this >= '0' && this <= '9');
+};
+
+String.prototype.esPunt = function() {
+    return (this == ".");
+};
+
+String.prototype.esOp = function() {
+    return (this == "+" || this == "-" || this == "*" || this == "/");
+};
+
+// proves calc():
 console.log(calc("6.25+6.75"));
 console.log(calc("3.6-2"));
 console.log(calc("4*1.25"));

@@ -1,0 +1,75 @@
+@font-face {
+  font-family: sevenSegment;
+  src: url("../fonts/Seven Segment.ttf");
+}
+main {
+  width: auto;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #aeaeae;
+}
+main .calc-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 5px 5px;
+  grid-template-areas: "pantalla pantalla pantalla pantalla pantalla" ". . . . ." ". . . . ." ". . . . .";
+  color: #424242;
+}
+main .calc-container #pantalla {
+  grid-area: pantalla;
+  background-color: #eaeaea;
+  width: 270px;
+  text-align: right;
+  white-space: nowrap;
+  font-family: sevenSegment, monospace;
+  font-size: 3em;
+  font-weight: bold;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+main .calc-container button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  font-family: "Fira Sans", sans-serif;
+}
+main .calc-container button.nums {
+  background-color: white;
+}
+main .calc-container button.operador {
+  background-color: moccasin;
+}
+main .calc-container button.memoria {
+  background-color: salmon;
+}
+main .calc-container button.neteja {
+  background-color: orangered;
+}
+main .calc-container button:hover:not([disabled]) {
+  cursor: pointer;
+}
+main .calc-container button:active {
+  background-color: #aeaeae;
+  color: #eaeaea;
+}
+main .calc-container button[disabled] {
+  color: rgba(0, 0, 0, 0.2);
+}
+main .calc-container .punt {
+  width: auto;
+  grid-column-start: 2;
+  grid-column-end: span 2;
+}
+main .calc-container .igual {
+  width: auto;
+  background-color: dodgerblue;
+  color: white;
+  grid-column-start: 1;
+  grid-column-end: span 5;
+  font-size: 2em;
+}
+
+/*# sourceMappingURL=styles.css.map */
