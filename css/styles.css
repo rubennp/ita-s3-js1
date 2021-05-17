@@ -6,9 +6,16 @@ main {
   width: auto;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #aeaeae;
+}
+main div#memoria {
+  font-family: sevenSegment;
+  position: relative;
+  top: 20px;
+  color: #aeaeae;
 }
 main .calc-container {
   display: grid;
@@ -23,9 +30,11 @@ main .calc-container #pantalla {
   background-color: #eaeaea;
   width: 270px;
   text-align: right;
+  padding-top: 15px;
+  padding-bottom: 0;
   white-space: nowrap;
   font-family: sevenSegment, monospace;
-  font-size: 3em;
+  font-size: 2em;
   font-weight: bold;
   overflow-y: hidden;
   overflow-x: scroll;

@@ -27,27 +27,28 @@
 
 <body>
     <main>
+        <div id="memoria"></div>
         <form class="calc-container">
             <input type="text" id="pantalla" disabled></input>
             <button type="button" class="nums" onclick="add('1')">1</button>
             <button type="button" class="nums" onclick="add('2')">2</button>
             <button type="button" class="nums" onclick="add('3')">3</button>
             <button type="button" class="func operador" onclick="add('+')" disabled>+</button>
-            <button type="button" class="func memoria" disabled>MR+</button>
+            <button type="button" class="func memoria memIn" onclick="memIn()" disabled>M←</button>
             <button type="button" class="nums" onclick="add('4')">4</button>
             <button type="button" class="nums" onclick="add('5')">5</button>
             <button type="button" class="nums" onclick="add('6')">6</button>
             <button type="button" class="func operador" onclick="add('-')" disabled>-</button>
-            <button type="button" class="func memoria" disabled>MR-</button>
+            <button type="button" class="func memoria memOut" onclick="memOut()" disabled>M→</button>
             <button type="button" class="nums" onclick="add('7')">7</button>
             <button type="button" class="nums" onclick="add('8')">8</button>
             <button type="button" class="nums" onclick="add('9')">9</button>
             <button type="button" class="func operador" onclick="add('*')" disabled>*</button>
-            <button type="button" class="func memoria" disabled>MC</button>
+            <button type="button" class="func memoria memNeteja" onclick="memNeteja()" disabled>MC</button>
             <button type="button" class="nums" onclick="add('0')">0</button>
             <button type="button" class="nums punt" onclick="add('.')">.</button>
             <button type="button" class="func operador" onclick="add('/')" disabled>÷</button>
-            <button type="button" class="func neteja" disabled>AC</button>
+            <button type="button" class="neteja" onclick="neteja()">AC</button>
             <button type="button" class="igual" onclick="resultat()" disabled>=</button>
         </form>
     </main>

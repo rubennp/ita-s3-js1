@@ -75,11 +75,12 @@ function decimals(arr) {
 /*
  * Nivell 3
  */
+
 const SI = true, NO = false;
 const ON = false, OFF = true;   // butons activats o no
 
 let pantalla = "0";             // sortida per pantalla
-let memoria = 0;
+let memoria = "0";
 
 // let manual = NO;             // entrada manual de dades -> TODO <-
 let punt = NO;                  // controla si s'ha activat el .
@@ -88,8 +89,12 @@ let novaOp = SI;
 
 window.onload = function() {
     document.getElementById("pantalla").value = "0";
+    document.getElementById("memoria").innerHTML = "0";
 }; 
 
+/*
+ *  add(): afegeix a pantalla entrada usuari
+ */
 function add(toPantalla) {
 
     // si entrada és un punt o una operació
@@ -107,10 +112,18 @@ function add(toPantalla) {
     else if (toPantalla.esOp()) {         
         num1 = NO;
         punt = NO;
+        if (memoria !== "0") btnsOnOff("memOut", ON);
     } 
     // si entrada és un dígit
-    else {                                
-        if (num1) btnsOnOff("func", ON);
+    else {                               
+        if (num1) { 
+            btnsOnOff("func", ON);
+            if (memoria === "0") {
+                btnsOnOff("memOut", OFF);
+                btnsOnOff("memNeteja", OFF);
+            }
+            if (pantalla !== "0" && novaOp) pantalla = "";
+        }
         else {
             btnsOnOff("igual", ON);
             if (!punt) btnsOnOff("punt", ON);
@@ -118,47 +131,105 @@ function add(toPantalla) {
     }
 
     // si estem al principi i l'entrada no és un punt esborra pantalla
-    if (pantalla === "0" && !toPantalla.esPunt() || novaOp) {
-        pantalla = "";
-    }
-
-    // si és nova operació
-    if (novaOp) {
-        novaOp = NO;
-        btnsOnOff("punt", ON);
-    }
+    if (pantalla === "0" && !toPantalla.esPunt()) pantalla = "";
 
     pantalla += toPantalla;
 
     document.getElementById("pantalla").value = pantalla;
 }
 
+// memIn(): posa pantalla en memòria
+function memIn() {
+    memoria = pantalla;
+
+    btnsOnOff("memOut", ON);
+    btnsOnOff("memNeteja", ON);
+
+    document.getElementById("memoria").innerHTML = memoria;
+}
+
+// memOut(): posa memoria en pantalla
+function memOut() {
+    if (pantalla === "0") pantalla = "";
+
+    pantalla += memoria;
+
+    if (!num1) btnsOnOff("igual", ON);
+
+    document.getElementById("pantalla").value = pantalla;
+}
+
+// memNeteja(): esborra memòria
+function memNeteja() {
+    memoria = "0";
+    
+    btnsOnOff("memoria", OFF);
+    if (pantalla !== "0") btnsOnOff("memIn", ON);
+
+    document.getElementById("memoria").innerHTML = memoria;
+}
+
+/*
+ * neteja(): esborra pantalla i reset
+ */
+function neteja() {
+    pantalla = "0";             
+
+    punt = NO;
+    num1 = SI;                  
+    novaOp = SI;
+
+    if (memoria === "0") btnsOnOff("memoria", OFF);
+    else btnsOnOff("memIn", OFF);
+
+    document.getElementById("pantalla").value = pantalla;
+}
+
+/*
+ * resultat(): calcula resultat i mostra en pantalla.
+ */
 function resultat() {
     let resultat = calc(pantalla);
 
     novaOp = SI;
-    punt = NO;
     num1 = SI;
 
     btnsOnOff("igual", OFF);
-    btnsOnOff("punt", OFF);
+    btnsOnOff("func", ON);
+    btnsOnOff("memIn", ON);
 
-    document.getElementById("pantalla").value = resultat;
+    pantalla = resultat;
+
+    if (/[\.]/.test(pantalla)) {
+        punt = SI;
+        btnsOnOff("punt", OFF);
+    } else {
+        punt = NO;
+        btnsOnOff("punt", ON);
+    }
+
+    document.getElementById("pantalla").value = pantalla;
 }
 
+/*
+ * btnsOnOff(): activa o desactiva botons
+*/
 function btnsOnOff(el, val) {
     let btnsOp = document.getElementsByClassName(el);
     for (let o in btnsOp) btnsOp[o].disabled = val;
 }
 
+// true si és un dígit
 String.prototype.esDigit = function() {
     return (this >= '0' && this <= '9');
 };
 
+// true si és un punt
 String.prototype.esPunt = function() {
     return (this == ".");
 };
 
+// true si és una operació matemàtica
 String.prototype.esOp = function() {
     return (this == "+" || this == "-" || this == "*" || this == "/");
 };
@@ -169,3 +240,4 @@ console.log(calc("3.6-2"));
 console.log(calc("4*1.25"));
 console.log(calc("3.6/2.7"));
 console.log(calc("3/0"));
+console.log(calc("-34*2"));
