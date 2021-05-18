@@ -122,7 +122,7 @@ function add(toPantalla) {
                 btnsOnOff("memOut", OFF);
                 btnsOnOff("memNeteja", OFF);
             }
-            if (pantalla !== "0" && novaOp) pantalla = "";
+            if (pantalla === "0" && novaOp) pantalla = "";
         }
         else {
             btnsOnOff("igual", ON);
@@ -144,6 +144,7 @@ function memIn() {
 
     btnsOnOff("memOut", ON);
     btnsOnOff("memNeteja", ON);
+    btnsOnOff("operador", ON);
 
     document.getElementById("memoria").innerHTML = memoria;
 }
@@ -178,9 +179,16 @@ function neteja() {
     punt = NO;
     num1 = SI;                  
     novaOp = SI;
-
+    
+    btnsOnOff("func", OFF);
+    
     if (memoria === "0") btnsOnOff("memoria", OFF);
-    else btnsOnOff("memIn", OFF);
+    else {
+        btnsOnOff("memoria", ON);
+        btnsOnOff("memIn", OFF);
+    }
+
+    btnsOnOff("punt", ON);
 
     document.getElementById("pantalla").value = pantalla;
 }
@@ -196,8 +204,11 @@ function resultat() {
 
     btnsOnOff("igual", OFF);
     btnsOnOff("func", ON);
-    btnsOnOff("memIn", ON);
-
+    if (memoria === "0") {
+        btnsOnOff("memoria", OFF);
+        btnsOnOff("memIn", ON);
+    } else btnsOnOff("memoria", ON);
+    
     pantalla = resultat;
 
     if (/[\.]/.test(pantalla)) {
