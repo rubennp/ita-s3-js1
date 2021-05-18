@@ -5,21 +5,26 @@
  * el seu valor o cadena d'error.
  */
 function calc(oper) {
-    let op = '';
+    let op = oper.match(/\b([\+\-\/\*])/);
 
     // troba el tipus d'operació
-    for (let d in oper) {
-        if (oper[d] === '+' || oper[d] === '-' || oper[d] === '/' || oper[d] === '*') {
-            op = oper[d];
-            break;
-        }
-    }
+    // for (let d in oper) {
+    //     if (/[\+\/\-\*]/.test(oper[d]) && d !== 0) {
+    //         op = oper[d];
+    //         break;
+    //     }
+    // }
+
+    // troba el tipus d'operació obviant 1r caràcter
+    // op = oper.match(/\b([\+\-\/\*])/);
 
     // divideix per tipus d'operació
-    let arrOper = oper.split(op);
+    let arrOper = oper.split(op[0]);
+
     // assigna valors de la operació
     let v1 = parseFloat(arrOper[0]),
         v2 = parseFloat(arrOper[1]);
+
     // número de decimals
     let nDec = decimals(arrOper);
 
@@ -27,7 +32,7 @@ function calc(oper) {
     let r = 0.0;
 
     // fa la operació segons tipus vigilant número de decimals pq resultat sigui més "humà"
-    switch (op) {
+    switch (op[0]) {
         case '+':
             r = (v1 + v2).toFixed(nDec);
             break;
@@ -39,7 +44,7 @@ function calc(oper) {
             break;
         case '/':
             // si es divideix per 0: error
-            if (v2 === 0) return "No es pot dividir per 0!";
+            if (v2 === 0) return "No dividir per 0!";
             // si no hi ha decimals en els dígits entrats, es divideix sense .toFixed,
             // pq resultat sigui més real (ex. 3/2 => normal: 1.5 | amb .toFixed: 2)
             r = (nDec === 0) ? (v1 / v2) : (v1 / v2).toFixed(nDec);
@@ -78,3 +83,4 @@ console.log(calc("3.6-2"));
 console.log(calc("4*1.25"));
 console.log(calc("3.6/2.7"));
 console.log(calc("3/0"));
+console.log(calc("-34/2"));
